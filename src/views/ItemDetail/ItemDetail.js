@@ -1,41 +1,54 @@
-import  {useState,useEffect} from 'react'
+import ItemCount from '../../Components/itemCount/ItemCount'
 import { itemsData } from '../../Components/Data/ItemData';
-
+import {useState} from 'react'
+import {Link} from 'react-router-dom'
+import Button from '@material-ui/core/Button'
  
 
-function ItemDetail({ match }) {
+function ItemDetail({match}) {
+
+const itemID =match.params.id
+
+let filtro =itemsData.filter(function(item){
+   
+   
+return item.id ===itemID
+   })
+
+const onAdd=(cantidad)=>{
+        setTotal(cantidad)
+        setVariable(false)
+
+}
+
+const [total,setTotal]= useState()
+const [variable,setVariable]=useState(true)
+console.log(total)
     
-    let itemId=match.params.id
-    
-    const [item, setItem]= useState(itemsData)
-    useEffect(()=>{
-         new Promise ((resolve,reject)=>
-        {
-            resolve(setItem(itemId))
-        });
-        
-        
-    },[itemId])
-    return (
+
+return (
         <div>
-            <h1>Detalles</h1>
-            {item.map((detalle)=>{
+            {filtro.map((item)=>{
                 return(
-                    <div key={detalle.id}>
-                        <div className="contenedor">
-                            <div className="Card">
-                            <div ><img className="imagen" alt="foto" src={detalle.img}></img>
+                    <div className="contenedor" key={item.id}>
+                        <div className="Card">
+                            <div ><img className="imagen" alt="foto" src={item.img}></img>
                             </div>
                             <div className="contenedorTexto">
-                                <div className="nombre">{detalle.name}</div>
-                                <div className="precio">${detalle.price}</div>
+                                <div className="nombre">{item.name}</div>
+                                <div className="precio">${item.price}</div>
+                                <div className="precio">Stock: {item.stock}</div>
                             </div>
-                            </div>
-                            </div>
+                        </div>
+                        { variable ?(
+                        <ItemCount stock={item.stock}
+                                    initial={1}
+                                    onAdd={onAdd}/>):(
+                                        <Link to="/Cart"><Button variant="contained" color="secondary">Terminar Mi Compra</Button></Link>
+                                    )}
                     </div>
                 )
             })}
-
         </div>
     )
 }

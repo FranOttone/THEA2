@@ -2,15 +2,15 @@ import React from 'react'
 import './ItemCard.css'
 
 
-function ItemCard({data}) {
+function ItemCard({item}) {
     return (
 <div className="contenedor">
     <div className="Card">
-        <div ><img className="imagen" alt="foto" src={data.img}></img>
+        <div ><img className="imagen" alt="foto" src={item.img}></img>
         </div>
         <div className="contenedorTexto">
-            <div className="nombre">{data.name}</div>
-            <div className="precio">${data.price}</div>
+            <div className="nombre">{item.name}</div>
+            <div className="precio">${item.price}</div>
         </div>
     </div>
 </div>
