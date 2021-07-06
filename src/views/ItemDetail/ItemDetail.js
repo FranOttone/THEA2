@@ -1,30 +1,25 @@
 import ItemCount from '../../Components/itemCount/ItemCount'
 import { itemsData } from '../../Components/Data/ItemData';
-import {useState} from 'react'
+import {useContext} from 'react'
 import {Link} from 'react-router-dom'
 import Button from '@material-ui/core/Button'
- 
+import { CartContext } from '../../Components/CartContex/CartContex';
+
+
 
 function ItemDetail({match}) {
-
+    const {addItem}= useContext(CartContext)
 const itemID =match.params.id
 
-let filtro =itemsData.filter(function(item){
+const filtro =itemsData.filter(function(item){
    
    
 return item.id ===itemID
    })
 
-const onAdd=(cantidad)=>{
-        setTotal(cantidad)
-        setVariable(false)
 
-}
 
-const [total,setTotal]= useState()
-const [variable,setVariable]=useState(true)
-console.log(total)
-    
+
 
 return (
         <div>
@@ -40,12 +35,11 @@ return (
                                 <div className="precio">Stock: {item.stock}</div>
                             </div>
                         </div>
-                        { variable ?(
+                      
                         <ItemCount stock={item.stock}
                                     initial={1}
-                                    onAdd={onAdd}/>):(
+                                    addItem={addItem}/>):(
                                         <Link to="/Cart"><Button variant="contained" color="secondary">Terminar Mi Compra</Button></Link>
-                                    )}
                     </div>
                 )
             })}
