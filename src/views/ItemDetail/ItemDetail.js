@@ -1,45 +1,42 @@
-import ItemCount from '../../Components/itemCount/ItemCount'
-import { itemsData } from '../../Components/Data/ItemData';
-import {useContext} from 'react'
-import {Link} from 'react-router-dom'
+//import ItemCount from '../../Components/itemCount/ItemCount'
+import {useContext,useState} from 'react'
+//import {Link} from 'react-router-dom'
 import Button from '@material-ui/core/Button'
-import { CartContext } from '../../Components/CartContex/CartContex';
+import { CartContext } from '../../Components/CartContext/CartContext';
+import { Link } from 'react-router-dom';
 
 
 
 function ItemDetail({match}) {
-    const {addItem}= useContext(CartContext)
-const itemID =match.params.id
-
-const filtro =itemsData.filter(function(item){
-   
-   
-return item.id ===itemID
-   })
-
+    const {productos,addToCart,variable}=useContext(CartContext)
+    const itemID =match.params.id;
+    
+    const filtro =productos.filter(function(item){
+   return item.id ===itemID
+     });
+    
 
 
 
 
 return (
         <div>
-            {filtro.map((item)=>{
+            {filtro.map((prod)=>{
                 return(
-                    <div className="contenedor" key={item.id}>
+                    <div className="contenedor" key={prod.id}>
                         <div className="Card">
-                            <div ><img className="imagen" alt="foto" src={item.img}></img>
+                            <div ><img className="imagen" alt="foto" src={prod.img}></img>
                             </div>
                             <div className="contenedorTexto">
-                                <div className="nombre">{item.name}</div>
-                                <div className="precio">${item.price}</div>
-                                <div className="precio">Stock: {item.stock}</div>
+                                <div className="nombre">{prod.name}</div>
+                                <div className="precio">${prod.price}</div>
+                                <div className="precio">Stock: {prod.stock}</div>
                             </div>
                         </div>
-                      
-                        <ItemCount stock={item.stock}
-                                    initial={1}
-                                    addItem={addItem}/>):(
-                                        <Link to="/Cart"><Button variant="contained" color="secondary">Terminar Mi Compra</Button></Link>
+                       {variable ? (<Button variant="contained" onClick={()=>addToCart(prod.id)}>
+                        Agregar Al Carrito
+                        </Button>):(<Link to="/cart"><Button variant="contained" color="secondary">Terminar mi compra </Button></Link>)}
+                        
                     </div>
                 )
             })}

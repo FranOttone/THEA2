@@ -10,7 +10,7 @@ import Carrito from './views/Cart/Carrito'
 import ItemDetail from './views/ItemDetail/ItemDetail';
 import Top from './views/Top/Top';
 import Bottom from './views/Bottom/Bottom';
-import CartProvider from './Components/CartContex/CartContex';
+import CartProvider from './Components/CartContext/CartContext';
 
 
 

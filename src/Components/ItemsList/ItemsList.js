@@ -1,26 +1,30 @@
+import React from 'react';
 import ItemCard from '../ItemsCard/ItemCard';
-import { itemsData } from '../Data/ItemData';
 import {Link} from 'react-router-dom'
-
+import {CartContext} from '../CartContext/CartContext'
+import {useContext} from 'react'
 
 //
 //
 function ItemsList() {
-
+ const {productos}=useContext(CartContext)
     return (
         <div>
-            {itemsData.map((item)=>{
+            {productos.map((producto)=>{
                 return(
 
-                    <div key={item.id}>
-                        <Link to={`/top/detail/${item.id}`}>
-                        <ItemCard item={item}/>
+                    <div key={producto.id}>
+                        <Link to={`/top/detail/${producto.id}`}>
+                        <ItemCard producto={producto}/>
                         </Link>
                     </div>
                 )
             })}
         </div>
     )
-}
+};
+   
+    
+
 
 export default ItemsList
